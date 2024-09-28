@@ -29,6 +29,11 @@ def store_image(image):
     }
     return image_collection.insert_one(image_doc)
 
+@app.route('/home', methods=['POST'])
+def test():
+    print("yo")
+    return jsonify({'test': 'TEST'}), 432
+
 @app.route('/upload', methods=['POST'])
 def process_image():
     if 'image' not in request.files:
