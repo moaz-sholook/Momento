@@ -16,8 +16,7 @@ db = client['momento']
 image_collection = db['images']
 text_collection = db['momento']
 openAIClient = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-
-# CORS(app)
+CORS(app)
 
 MAX_IMAGE_SIZE = 16 * 1024 * 1024
 
