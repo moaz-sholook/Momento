@@ -1,0 +1,164 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+    background-color: #ffffff;
+}
+
+/* Sidebar styling */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    /* Fixed width */
+    min-width: 150px;
+    /* Ensure it doesn't shrink */
+    background-color: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #e0e0e0;
+}
+
+.sidebar button {
+    padding: 15px;
+    background-color: #e6e6fa;
+    border: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #000000;
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide overflowing text */
+    text-overflow: ellipsis;
+    /* Show ellipsis for overflowing text */
+}
+
+.sidebar button.active {
+    background-color: #b0c4de;
+}
+
+/* Main Content Area */
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    /* Hide horizontal overflow */
+}
+
+.app-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #4169e1;
+}
+
+/* Chat Section Styling */
+.chat-section {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 140px);
+    /* Adjust based on your header/title height and padding */
+}
+
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    max-width: 70%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.message.user {
+    background-color: #e6e6fa;
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.message.bot {
+    background-color: #b0c4de;
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #ffffff;
+    border-top: 1px solid #e0e0e0;
+}
+
+input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #b0c4de;
+}
+
+button {
+    background-color: #4169e1;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+}
+
+/* Journal Section */
+.journal-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100vh - 120px);
+    /* Adjust based on your header/title height and padding */
+    overflow-y: auto;
+}
+
+.journal-entry {
+    width: 90%;
+    height: 150px;
+    padding: 15px;
+    border: 1px solid #b0c4de;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: none;
+    background-color: #e6e6fa;
+}
+
+.add-entry-button {
+    align-self: flex-start;
+    background-color: #4169e1;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-entry-button:hover {
+    background-color: #3a5fcd;
+}

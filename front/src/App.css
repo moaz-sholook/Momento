@@ -1,0 +1,80 @@
+/* App.css */
+
+/* Overall layout */
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f5f7fa;
+}
+
+.app-header {
+  width: 100%;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #8f92c4;
+  margin-top: 10px;
+}
+
+/* Sidebar with Tabs */
+.sidebar {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.tab-button {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  background-color: #d3d5f3;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.tab-button.active {
+  border: 2px solid #8f92c4;
+  color: #ffffff;
+  background-color: #8f92c4;
+}
+
+.tab-button:hover {
+  background-color: #8f92c4;
+  color: #ffffff;
+}
+
+/* Main Content */
+.main-content {
+  width: 80%;
+  padding: 20px;
+}
+
+/* Chat App (Placeholder, you'll define more later) */
+.chat-container {
+  background-color: #e4e6f6;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Journal Entries */
+.journal-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.journal-entry {
+  background-color: #9fa5d6;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+  text-align: left;
+}
