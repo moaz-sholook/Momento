@@ -29,10 +29,10 @@ def store_image(image):
     }
     return image_collection.insert_one(image_doc)
 
-@app.route('/home', methods=['POST'])
+@app.route('/home', methods=['GET'])
 def test():
     print("yo")
-    return jsonify({'test': 'TEST'}), 432
+    return jsonify({"message": "This is a simple test message"}), 200
 
 @app.route('/upload', methods=['POST'])
 def process_image():
