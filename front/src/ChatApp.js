@@ -72,11 +72,13 @@ const ChatApp = () => {
     // };
 
     const sendMessage = async () => {
-        if (input.trim()) {
-            const userMessage = input.slice(0, 500); // Limit message length to 500 characters
-            setMessages([...messages, { sender: 'user', text: userMessage }]);
 
+        //DB not empty
         if (description.documents !== undefined) {
+
+            if (input.trim()) {
+                const userMessage = input.slice(0, 500); // Limit message length to 500 characters
+                setMessages([...messages, { sender: 'user', text: userMessage }]);
             
             let count = description.documents.length;
             let combinedDesc = "";
@@ -88,8 +90,14 @@ const ChatApp = () => {
             setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse2 }]);
             }
         } else {
+            if (input.trim()) {
+                const userMessage = input.slice(0, 500); // Limit message length to 500 characters
+                setMessages([...messages, { sender: 'user', text: userMessage }]);
+
             setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Please select a day" }]);
+            }
         }
+        setInput('');
     };
 
     const getDescriptions = async () => {
