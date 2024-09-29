@@ -6,6 +6,7 @@ const ChatApp = () => {
     const [journalEntries, setJournalEntries] = useState(['']);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
+    const [description, setDescription] = useState('');
     const chatBoxRef = useRef(null);
     const currentDate = new Date().toISOString().split('T')[0]
 
@@ -16,19 +17,26 @@ const ChatApp = () => {
         }
     }, [messages]);
 
-    const initializeBotMessage = async (date, desc) => {
+    const initializeBotMessage = async (desc) => {
         const botResponse = await getBotResponse('Greet the user in a friendly way, maybe asking how their day was');
         setMessages([{ sender: 'bot', text: botResponse }]);
 
+        setDescription(desc)
         let count = desc.documents.length;
         let combinedDesc = "";
         for (let i = 0; i < count; i++) {
             combinedDesc+=(desc.documents[i].text) + ","
         };
         console.log(combinedDesc)
-        const botResponse2 = await getBotResponse('The following are brief descriptions of photos taken by the user throughout their day. Come up with 1-5 highlights to give the user inspiration to write about in their end of day journal, put them on separate lines')
+        const botResponse2 = await getBotResponse('The following are brief descriptions of photos taken by the user throughout their day. Come up with 1-5 highlights to give the user ideas to write about in their end of day journal, put them on separate lines: \n' + combinedDesc)
         setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Here are some ideas to help you get started on your journal: \n" + botResponse2 }]);
         
+        var goal1 = "Walking more"
+        var goal2 = "Eating healthy"
+        var goal3 = "Working out"
+        const botResponse3 = await getBotResponse('The users 3 main goals are' + goal1 + ', ' + goal2 + ', '  + goal3 + '. Based on the descriptions of photos taken throughout their day, has the user worked towards any of their goals. If not, give some brief advice. Try and keep it short and encouraging. Here are the descriptions: ' + combinedDesc)
+        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse3}])
+
     };
 
     const handleDateChange = async (event) => {
@@ -36,33 +44,50 @@ const ChatApp = () => {
         
         const date = event.target.value;
         if (date === currentDate) {
-            await initializeBotMessage(date, description);
+            await initializeBotMessage(description);
         } else {
             setMessages([{ sender: 'bot', text: 'Select a day to begin!' }]);
         }
     };
+
+    // const sendMessage = async () => {
+    //     if (input.trim()) {
+    //         const userMessage = input.slice(0, 500); // Limit message length to 500 characters
+    //         setMessages([...messages, { sender: 'user', text: userMessage }]);
+
+    //         try {
+    //             const botResponse = await getBotResponse(userMessage);
+    //             setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse }]);
+    //         } catch (error) {
+    //             console.error('Error getting bot response:', error);
+    //             setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Sorry, I encountered an error. Please try again." }]);
+    //         }
+
+    //         setInput('');
+    //     }
+    // };
 
     const sendMessage = async () => {
         if (input.trim()) {
             const userMessage = input.slice(0, 500); // Limit message length to 500 characters
             setMessages([...messages, { sender: 'user', text: userMessage }]);
 
-            try {
-                const botResponse = await getBotResponse(userMessage);
-                setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse }]);
-            } catch (error) {
-                console.error('Error getting bot response:', error);
-                setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Sorry, I encountered an error. Please try again." }]);
-            }
-
-            setInput('');
+        
+        let count = description.documents.length;
+        let combinedDesc = "";
+        for (let i = 0; i < count; i++) {
+            combinedDesc+=(description.documents[i].text) + ","
+        };
+        console.log(combinedDesc)
+        const botResponse2 = await getBotResponse('These descriptions describe what the user did today: \n' + combinedDesc + '\nBe direct and straight to the point and short, and if it doesnt apply to what they did, tell them how they can improve. Keep it 1-2 sentences. Answer with yes or no if you need. The users question is:\n' + userMessage)
+        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse2 }]);
         }
     };
 
     const getDescriptions = async () => {
         const getTextsUrl = 'https://momento-delta.vercel.app/day';
         const reqobj = {
-            date: '2024-09-28'
+            date: '2024-09-29'
         }
         try {
             const response = await fetch(getTextsUrl, {
