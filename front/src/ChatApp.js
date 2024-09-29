@@ -76,15 +76,19 @@ const ChatApp = () => {
             const userMessage = input.slice(0, 500); // Limit message length to 500 characters
             setMessages([...messages, { sender: 'user', text: userMessage }]);
 
-        
-        let count = description.documents.length;
-        let combinedDesc = "";
-        for (let i = 0; i < count; i++) {
-            combinedDesc+=(description.documents[i].text) + ","
-        };
-        console.log(combinedDesc)
-        const botResponse2 = await getBotResponse('These descriptions describe what the user did today: \n' + combinedDesc + '\nBe direct and straight to the point and short, and if it doesnt apply to what they did, tell them how they can improve. Keep it 1-2 sentences. Answer with yes or no if you need. The users question is:\n' + userMessage)
-        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse2 }]);
+        if (description.documents !== undefined) {
+            
+            let count = description.documents.length;
+            let combinedDesc = "";
+            for (let i = 0; i < count; i++) {
+                combinedDesc+=(description.documents[i].text) + ","
+            };
+            console.log(combinedDesc)
+            const botResponse2 = await getBotResponse('These descriptions describe what the user did today: \n' + combinedDesc + '\nBe direct and straight to the point and short, and if it doesnt apply to what they did, tell them how they can improve. Keep it 1-2 sentences. Answer with yes or no if you need. The users question is:\n' + userMessage)
+            setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse2 }]);
+            }
+        } else {
+            setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Please select a day" }]);
         }
     };
 
