@@ -22,20 +22,24 @@ const ChatApp = () => {
         setMessages([{ sender: 'bot', text: botResponse }]);
 
         setDescription(desc)
-        let count = desc.documents.length;
-        let combinedDesc = "";
-        for (let i = 0; i < count; i++) {
-            combinedDesc+=(desc.documents[i].text) + ","
-        };
-        console.log(combinedDesc)
-        const botResponse2 = await getBotResponse('The following are brief descriptions of photos taken by the user throughout their day. Come up with 1-5 highlights to give the user ideas to write about in their end of day journal, put them on separate lines: \n' + combinedDesc)
-        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Here are some ideas to help you get started on your journal: \n" + botResponse2 }]);
-        
-        var goal1 = "Walking more"
-        var goal2 = "Eating healthy"
-        var goal3 = "Working out"
-        const botResponse3 = await getBotResponse('The users 3 main goals are' + goal1 + ', ' + goal2 + ', '  + goal3 + '. Based on the descriptions of photos taken throughout their day, has the user worked towards any of their goals. If not, give some brief advice. Try and keep it short and encouraging. Here are the descriptions: ' + combinedDesc)
-        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse3}])
+        console.log(desc)
+        if (desc.documents !== undefined) {
+            let count = desc.documents.length;
+            let combinedDesc = "";
+            for (let i = 0; i < count; i++) {
+                combinedDesc+=(desc.documents[i].text) + ","
+            };
+            console.log(combinedDesc)
+            const botResponse2 = await getBotResponse('The following are brief descriptions of photos taken by the user throughout their day. Come up with 1-5 highlights to give the user ideas to write about in their end of day journal, put them on separate lines: \n' + combinedDesc)
+            setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Here are some ideas to help you get started on your journal: \n" + botResponse2 }]);
+            
+            var goal1 = "Walking more"
+            var goal2 = "Eating healthy"
+            var goal3 = "Working out"
+            const botResponse3 = await getBotResponse('The users 3 main goals are' + goal1 + ', ' + goal2 + ', '  + goal3 + '. Based on the descriptions of photos taken throughout their day, has the user worked towards any of their goals. If not, give some brief advice. Try and keep it short and encouraging. Here are the descriptions: ' + combinedDesc)
+            setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: botResponse3}])
+    
+        }
 
     };
 
