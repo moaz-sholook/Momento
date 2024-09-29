@@ -2,8 +2,8 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
     background-color: #ffffff;
+    padding-top: 100px;
 }
 
 .app-container {
@@ -12,10 +12,23 @@ body {
     background-color: #ffffff;
 }
 
+.top-bar {
+    width: 100%; /* Full width */
+    background-color: #4169e1; /* Background color */
+    color: white; /* Text color */
+    text-align: center; /* Center text */
+    position:absolute;
+    padding: 10px 0; /* Vertical padding */
+    top: 0; /* Aligns it to the top of the viewport */
+    left: 0; /* Aligns it to the left of the viewport */
+}
+
 /* Sidebar styling */
 .sidebar {
+    padding-top: 100px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 150px;
     /* Fixed width */
     min-width: 150px;
@@ -58,9 +71,20 @@ body {
 
 .app-title {
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #4169e1;
+    font-size: 35px; /* Increased font size for better visibility */
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Modern, clean font */
+    font-weight: bold; /* Make the title stand out */
+    text-transform: uppercase; /* Gives a more impactful look */
+    letter-spacing: 10px; /* Adds space between letters for readability */
+    background: white; /* linear-gradient(180deg, #c8cddb, #6a5acd); /* Gradient background */
+    -webkit-background-clip: text; /* Clips the background to the text */
+    -webkit-text-fill-color: transparent; /* Makes the text color transparent */
+}
+
+/* Optional hover effect */
+.app-title:hover {
+    transform: scale(1.15); /* Slightly enlarges the title on hover */
+    transition: transform 0.3s ease; /* Smooth transition effect */
 }
 
 /* Chat Section Styling */
@@ -145,13 +169,35 @@ select {
 }
 
 /* Journal Section */
+/* Journal Section */
 .journal-section {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    height: calc(100vh - 120px);
-    /* Adjust based on your header/title height and padding */
+    height: calc(100vh - 120px); /* Adjust based on your header/title height and padding */
+    max-height: calc(100vh - 120px); /* Ensures the section doesn't grow beyond the viewport */
     overflow-y: auto;
+    padding: 20px; /* Add some padding for better appearance */
+    box-sizing: border-box; /* Ensures padding is included in the height calculation */
+}
+
+/* Ensure content within the journal section can grow */
+.journal-section > * {
+    flex-shrink: 0; /* Prevents children from shrinking */
+}
+
+/* Optional: Styling for the scrollbar */
+.journal-section::-webkit-scrollbar {
+    width: 10px;
+}
+
+.journal-section::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+.journal-section::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .journal-entry {

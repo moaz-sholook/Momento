@@ -166,17 +166,26 @@ const ChatApp = () => {
 
     return (
         <div className="app-container">
+            <div className="top-bar">
+                <h1 className="app-title">MOMENTO</h1>
+                
+            </div>
             <div className="sidebar">
                 <button onClick={() => setActiveTab('chat')} className={activeTab === 'chat' ? 'active' : ''}>CHAT</button>
                 <button onClick={() => setActiveTab('journal')} className={activeTab === 'journal' ? 'active' : ''}>JOURNAL</button>
-            </div>
-            <div className="main-content">
-                <div className="header">
-                    <select className="dropdown-menu" onChange={handleDateChange}>
+                <select className="dropdown-menu" onChange={handleDateChange}>
                         <option>Select day</option>
                         <option>{currentDate}</option>
                     </select>
-                    <h1 className="app-title">MOMENTO</h1>
+            </div>
+            <div className="main-content">
+                <div className="header">
+                    <div/>   
+                    {/* <select className="dropdown-menu" onChange={handleDateChange}>
+                        <option>Select day</option>
+                        <option>{currentDate}</option>
+                    </select> */}
+                    
                 </div>
                 {activeTab === 'chat' ? (
                     <div className="chat-section">
