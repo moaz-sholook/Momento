@@ -7,13 +7,40 @@ const ChatApp = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState('');
     const chatBoxRef = useRef(null);
-    const [descriptions, setDescriptions] = useState(['']);
+    const currentDate = new Date().toISOString().split('T')[0]
+
 
     useEffect(() => {
         if (chatBoxRef.current) {
             chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
         }
     }, [messages]);
+
+    const initializeBotMessage = async (date, desc) => {
+        const botResponse = await getBotResponse('Greet the user in a friendly way, maybe asking how their day was');
+        setMessages([{ sender: 'bot', text: botResponse }]);
+
+        let count = desc.documents.length;
+        let combinedDesc = "";
+        for (let i = 0; i < count; i++) {
+            combinedDesc+=(desc.documents[i].text) + ","
+        };
+        console.log(combinedDesc)
+        const botResponse2 = await getBotResponse('The following are brief descriptions of photos taken by the user throughout their day. Come up with 1-5 highlights to give the user inspiration to write about in their end of day journal, put them on separate lines')
+        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Here are some ideas to help you get started on your journal: \n" + botResponse2 }]);
+        
+    };
+
+    const handleDateChange = async (event) => {
+        const description = await getDescriptions()
+        
+        const date = event.target.value;
+        if (date === currentDate) {
+            await initializeBotMessage(date, description);
+        } else {
+            setMessages([{ sender: 'bot', text: 'Select a day to begin!' }]);
+        }
+    };
 
     const sendMessage = async () => {
         if (input.trim()) {
@@ -49,77 +76,13 @@ const ChatApp = () => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            setDescriptions(response.json)
-            console.log(descriptions);
+            const result = await response.json()
+            return result
+
         } catch (error) {
             console.error('Error:', error);
         }
     }
-
-    // const getBotResponse = async (userInput) => {
-    //     const getTextsUrl = 'https://momento-delta.vercel.app/day';
-    //     const currentDate = new Date().toISOString().split('T')[0];
-
-    //     const getChatRequest = 'https://momento-delta.vercel.app/chatrequest';
-
-    //     try {
-
-    //         const queryParams = new URLSearchParams(userInput).toString();
-
-    //         try {
-    //             const url = `${getChatRequest}?${queryParams}`
-    //             console.log(url)
-    //             const response = await fetch(url);
-    //             const data = await response.json();
-    //             console.log(data);
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-
-    //     } catch {
-    //         console.error('Error:', error);
-    //         throw error;     
-    //     }
-
-    //     try {
-    //         // const url = `${getTextsUrl}?date=${currentDate}`
-    //         // console.log(url)
-    //         // const response = await fetch(url, {
-    //         //     method: 'GET',
-    //         //     headers: {
-    //         //         'Content-Type': 'application/json',
-    //         //         // Add any necessary authorization headers here
-    //         //     },
-    //         // });
-    //         const date = {
-    //             date: '2024-09-28'
-    //         }
-    //         const queryParams = new URLSearchParams(date).toString();
-
-    //         try {
-    //             const url = `${getTextsUrl}?${queryParams}`
-    //             console.log(url)
-    //             const response = await fetch(url);
-    //             const data = await response.json();
-    //             console.log(data);
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         }
-
-    //         // if (!response.ok) {
-    //         //     throw new Error(`HTTP error! status: ${response.status}`);
-    //         // }
-
-    //         // const data = await response.json();
-    //         // console.log(JSON.stringify(data, null, 3));  // Pretty-print JSON response
-
-    //         // // Process the data and return a response
-    //         return `I fetched data for ${currentDate}. Here's a summary: `;
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         throw error;  // Re-throw the error to be caught in sendMessage
-    //     }
-    // };
 
     const getBotResponse = async (userInput) => {
         const gptApiUrl = 'https://api.openai.com/v1/chat/completions';
@@ -147,7 +110,7 @@ const ChatApp = () => {
                 body: JSON.stringify({
                     model: "gpt-3.5-turbo",  // You can use 'gpt-3.5-turbo' for GPT-3.5 models
                     messages: messages,
-                    max_tokens: 150 // Adjust token limit as needed
+                    max_tokens: 500 // Adjust token limit as needed
                 })
             });
     
@@ -183,7 +146,13 @@ const ChatApp = () => {
                 <button onClick={() => setActiveTab('journal')} className={activeTab === 'journal' ? 'active' : ''}>JOURNAL</button>
             </div>
             <div className="main-content">
-                <h1 className="app-title">MOMENTO</h1>
+                <div className="header">
+                    <select className="dropdown-menu" onChange={handleDateChange}>
+                        <option>Select day</option>
+                        <option>{currentDate}</option>
+                    </select>
+                    <h1 className="app-title">MOMENTO</h1>
+                </div>
                 {activeTab === 'chat' ? (
                     <div className="chat-section">
                         <div className="chat-box" ref={chatBoxRef}>

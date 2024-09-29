@@ -83,7 +83,7 @@ def get_image(image_id):
 # Send request to gpt
 def gpt_request(image):
 
-    prompt = "Describe this image in detail: "
+    prompt = "Describe this image in one concise sentence"
 
     response = openAIClient.chat.completions.create(
     model="gpt-4o-mini",

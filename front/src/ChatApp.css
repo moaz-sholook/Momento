@@ -84,7 +84,7 @@ body {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
-    max-width: 70%;
+    max-width: 50%;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
@@ -125,6 +125,23 @@ button {
     cursor: pointer;
     white-space: nowrap;
     /* Prevent text from wrapping */
+}
+
+select {
+    padding: 15px;
+    background-color: #e6e6fa;
+    border: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 16px;
+    color: #000000;
+    white-space: nowrap;
+    /* Prevent text from wrapping */
+    overflow: hidden;
+    /* Hide overflowing text */
+    text-overflow: ellipsis;
+    /* Show ellipsis for overflowing text */
 }
 
 /* Journal Section */
