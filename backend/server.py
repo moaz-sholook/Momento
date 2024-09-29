@@ -38,7 +38,6 @@ def process_image():
     if 'image' not in request.files:
         return jsonify({'error': 'No image provided'}), 400
     
-
     image = request.files['image']  
     if image.filename == '':
         return jsonify({'error': 'No selected file'}), 400
@@ -81,13 +80,12 @@ def get_image(image_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-
 # Send request to gpt
 def gpt_request(image):
 
     prompt = "Describe this image in detail: "
 
-    response =  openAIClient.chat.completions.create(
+    response = openAIClient.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
         {
@@ -129,7 +127,7 @@ def save_text(response_text):
     except Exception as e:
         return str(e)
 
-@app.route('/day', methods=['GET'])
+@app.route('/day', methods=['POST'])
 def get_texts_by_date(): 
     try:
         # Extract the date from the POST request body
@@ -159,7 +157,6 @@ def get_texts_by_date():
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
 
 
 if __name__ == '__main__':
