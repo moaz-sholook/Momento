@@ -4,6 +4,7 @@ body {
     margin: 0;
     background-color: #ffffff;
     padding-top: 100px;
+    overflow: hidden; /* Hide both horizontal and vertical overflow */
 }
 
 .app-container {
@@ -38,6 +39,18 @@ body {
     border-right: 1px solid #e0e0e0;
 }
 
+.sidebar button:hover {
+    background-color: #b0c4de; /* Light gray background on hover */
+}
+
+.dropdown-menu {
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-menu:hover {
+    background-color: #b0c4de; /* Light gray background on hover */
+}
+
 .sidebar button {
     padding: 15px;
     background-color: #e6e6fa;
@@ -52,6 +65,7 @@ body {
     overflow: hidden;
     /* Hide overflowing text */
     text-overflow: ellipsis;
+    transition: background-color 0.3s ease;
     /* Show ellipsis for overflowing text */
 }
 
@@ -102,6 +116,10 @@ body {
     padding: 10px;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; /* This is crucial for flex containers */
+    max-height: calc(100vh - 200px); /* Adjust this value as needed */
 }
 
 .message {

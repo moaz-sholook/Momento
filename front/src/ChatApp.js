@@ -33,7 +33,7 @@ const ChatApp = () => {
             const botResponse2 = await getBotResponse('The following are brief descriptions of photos taken by the user throughout their day. Come up with 1-5 highlights to give the user ideas to write about in their end of day journal, put them on separate lines: \n' + combinedDesc)
             setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: "Here are some ideas to help you get started on your journal: \n" + botResponse2 }]);
             
-            var goal1 = "Walking more"
+            var goal1 = "Practicing code"
             var goal2 = "Eating healthy"
             var goal3 = "Working out"
             const botResponse3 = await getBotResponse('The users 3 main goals are' + goal1 + ', ' + goal2 + ', '  + goal3 + '. Based on the descriptions of photos taken throughout their day, has the user worked towards any of their goals. If not, give some brief advice. Try and keep it short and encouraging. Here are the descriptions: ' + combinedDesc)
@@ -149,7 +149,7 @@ const ChatApp = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: "gpt-3.5-turbo",  // You can use 'gpt-3.5-turbo' for GPT-3.5 models
+                    model: "gpt-4o-mini",  // You can use 'gpt-3.5-turbo' for GPT-3.5 models
                     messages: messages,
                     max_tokens: 500 // Adjust token limit as needed
                 })
@@ -192,7 +192,7 @@ const ChatApp = () => {
                 <select className="dropdown-menu" onChange={handleDateChange}>
                         <option>Select day</option>
                         <option>{currentDate}</option>
-                    </select>
+                </select>
             </div>
             <div className="main-content">
                 <div className="header">
